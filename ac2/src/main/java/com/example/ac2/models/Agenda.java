@@ -3,6 +3,13 @@ package com.example.ac2.models;
 import java.sql.Date;
 import java.util.List;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Agenda {
     private int id;
     private Date inicio;
