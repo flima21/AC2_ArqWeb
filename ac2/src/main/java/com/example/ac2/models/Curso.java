@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Curso {
     @Id
-    private int id;
+    private Long id;
     private String descricao;
     private String cargaHoraria;
     private String objetivo;
