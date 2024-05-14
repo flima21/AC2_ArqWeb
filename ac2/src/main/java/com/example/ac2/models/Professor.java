@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Professor {
-    private int id;
+    private long id;
     private String nome;
     private String cpf;
     private String rg;
@@ -18,7 +18,7 @@ public class Professor {
     private String celular;
     private List<Agenda> agenda;
 
-    public Professor obterPorId(int id){
+    public Professor obterPorId(long id){
         return new Professor();
     }
 

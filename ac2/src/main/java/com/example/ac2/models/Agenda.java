@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Agenda {
-    private int id;
+    private long id;
     private Date inicio;
     private Date fim;
     private String cidade;
@@ -19,7 +19,7 @@ public class Agenda {
     private String cep;
     private String treinamento;
 
-    public Professor getProfessor(int idProfessor){
+    public Professor getProfessor(long idProfessor){
         return new Professor();
     }
 
@@ -32,7 +32,7 @@ public class Agenda {
         return professores;
     }
 
-    public Agenda obterPorId(int id){
+    public Agenda obterPorId(long id){
         return new Agenda();
     }
 
@@ -44,7 +44,7 @@ public class Agenda {
         return agenda;
     }
 
-    public Agenda setTreinamento(int idAgenda, String treinamento){
+    public Agenda setTreinamento(long idAgenda, String treinamento){
         return new Agenda();
     }
 

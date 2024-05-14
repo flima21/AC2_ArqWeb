@@ -14,13 +14,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Curso {
     @Id
-    private int id;
+    private long id;
     private String descricao;
     private String cargaHoraria;
     private String objetivo;
     private String ementa;
 
-    public Curso getCursoId(int idCurso){
+    public Curso getCursoId(long idCurso){
         return new Curso();
     }
 
