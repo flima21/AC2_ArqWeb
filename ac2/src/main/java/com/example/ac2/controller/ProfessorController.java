@@ -25,26 +25,26 @@ public class ProfessorController {
   @Autowired
   private ProfessorRepository professorRepository;
 
-  @GetMapping("")
-  public ResponseEntity<List<Professor>> listAllProfessors(@RequestParam String param) {
-    List<Professor> professorList = professorRepository.findAll();
+  // @GetMapping()
+  // public ResponseEntity<List<Professor>> listAllProfessors(@RequestParam String param) {
+  //   List<Professor> professorList = professorRepository.findAll();
 
-    return ResponseEntity.ok(professorList);
-  }
+  //   return ResponseEntity.ok(professorList);
+  // }
 
-  @GetMapping("/{id}")
-  public ResponseEntity<Professor> professorById(@PathVariable(name= "id") Integer param) {
-    Professor professor = professorRepository.getReferenceById(param);
-      return ResponseEntity.ok(professor);
-  }
+  // @GetMapping("/{id}")
+  // public ResponseEntity<Professor> professorById(@PathVariable(name= "id") Integer param) {
+  //   Professor professor = professorRepository.getReferenceById(param);
+  //     return ResponseEntity.ok(professor);
+  // }
   
-  @PostMapping("")
-  @Transactional
-  public ResponseEntity<Professor> registerProfessor(@RequestBody Professor param) {
-      Professor professor = new Professor(param);
-      professorRepository.save(professor);
-      return ResponseEntity.ok(professor);
-  }
+  // @PostMapping("")
+  // @Transactional
+  // public ResponseEntity<Professor> registerProfessor(@RequestBody Professor param) {
+  //     Professor professor = new Professor(param);
+  //     professorRepository.save(professor);
+  //     return ResponseEntity.ok(professor);
+  // }
   
 
 }

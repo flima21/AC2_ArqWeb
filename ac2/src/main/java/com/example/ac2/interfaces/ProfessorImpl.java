@@ -5,12 +5,13 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.example.ac2.DTO.ProfessorDTO;
+import com.example.ac2.dtos.ProfessoresDTO;
 import com.example.ac2.exception.ApiErrorApplication;
 import com.example.ac2.models.Professor;
 import com.example.ac2.repository.ProfessorRepository;
 import com.example.ac2.services.ProfessorService;
 
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
@@ -19,7 +20,8 @@ public class ProfessorImpl implements ProfessorService {
   private ProfessorRepository professorRepository;
 
   @Override
-  public Professor store(ProfessorDTO professor) {
+  @Transactional
+  public Professor store(ProfessoresDTO professor) {
     Professor professorObjeto = new Professor();
 
     professorObjeto.setCelular(professor.getCelular());
@@ -33,9 +35,10 @@ public class ProfessorImpl implements ProfessorService {
   }
 
   @Override
-  public ProfessorDTO findById(Integer id) {
+  @Transactional
+  public ProfessoresDTO findById(Integer id) {
     Professor professor = this.professorRepository.findById(id).orElseThrow(() -> new ApiErrorApplication("Professor não encontrado"));
-    ProfessorDTO professorDTO = new ProfessorDTO();
+    ProfessoresDTO professorDTO = new ProfessoresDTO();
 
     professorDTO.setCelular(professor.getCelular());
     professorDTO.setCpf(professor.getCpf());
@@ -49,12 +52,13 @@ public class ProfessorImpl implements ProfessorService {
   }
 
   @Override
-  public List<ProfessorDTO> findAll() {
+  @Transactional
+  public List<ProfessoresDTO> findAll() {
     List<Professor> professors = this.professorRepository.findAll();
-    List<ProfessorDTO> professorDTOs = new ArrayList<ProfessorDTO>();
+    List<ProfessoresDTO> professorDTOs = new ArrayList<ProfessoresDTO>();
 
     for (Professor professor : professors) {
-      ProfessorDTO professorDTO = new ProfessorDTO();
+      ProfessoresDTO professorDTO = new ProfessoresDTO();
 
       professorDTO.setCelular(professor.getCelular());
       professorDTO.setCpf(professor.getCpf());
@@ -70,6 +74,8 @@ public class ProfessorImpl implements ProfessorService {
     return professorDTOs;
   }
 
+  @Override
+  @Transactional
   public void delete(Integer id) {
     Professor professor = this.professorRepository.findById(id).orElseThrow(() -> new ApiErrorApplication("Professor não localizado"));
     this.professorRepository.delete(professor);

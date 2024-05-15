@@ -22,30 +22,30 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RestController
 @RequestMapping("curso")
 public class CursoController {
-  @Autowired
-  private CursoRepository cursoRepository;
+  // @Autowired
+  // private CursoRepository cursoRepository;
 
-  @GetMapping("")
-  public ResponseEntity<List<Curso>> listAllCourses(@RequestParam String param) {
-    List<Curso> cursoList = cursoRepository.findAll();
+  // @GetMapping("")
+  // public ResponseEntity<List<Curso>> listAllCourses(@RequestParam String param) {
+  //   List<Curso> cursoList = cursoRepository.findAll();
 
-    return ResponseEntity.ok(cursoList);
+  //   return ResponseEntity.ok(cursoList);
 
-  }
+  // }
 
-  @GetMapping("/{id}")
-  public ResponseEntity<Curso> courserById(@PathVariable(name = "id") Integer param) {
-    Curso curso = cursoRepository.getReferenceById(param);
+  // @GetMapping("/{id}")
+  // public ResponseEntity<Curso> courserById(@PathVariable(name = "id") Integer param) {
+  //   Curso curso = cursoRepository.getReferenceById(param);
 
-    return ResponseEntity.ok(curso);
-  }
+  //   return ResponseEntity.ok(curso);
+  // }
 
-  @PostMapping("")
-  @Transactional
-  public ResponseEntity<Curso> registerCourses(@RequestBody Curso param) {
-      Curso curso = new Curso(param);
-      cursoRepository.save(curso);      
-      return ResponseEntity.ok(curso);
-  }
+  // @PostMapping("")
+  // @Transactional
+  // public ResponseEntity<Curso> registerCourses(@RequestBody Curso param) {
+  //     Curso curso = new Curso(param);
+  //     cursoRepository.save(curso);      
+  //     return ResponseEntity.ok(curso);
+  // }
   
 }

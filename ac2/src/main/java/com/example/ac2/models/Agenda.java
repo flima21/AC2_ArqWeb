@@ -1,68 +1,53 @@
 package com.example.ac2.models;
 
-import java.sql.Date;
-import java.util.List;
+import java.time.LocalDateTime;
+import java.util.Date;
 
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Entity
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
 public class Agenda {
-    private int id;
-    private Date inicio;
-    private Date fim;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
+
+    @Column(nullable = false)
+    private LocalDateTime inicio;
+
+    @Column(nullable = false)
+    private LocalDateTime fim;
+
+    @Column(nullable = false,length = 80)
     private String cidade;
+
+    @Column(nullable = false,length = 80)
     private String estado;
+
+    @Column(nullable = false,length = 80)
     private String cep;
+
+    @Column(length = 80)
     private String treinamento;
 
-    public Professor getProfessor(int idProfessor){
-        return new Professor();
-    }
-
-    public Professor associarProfessor(Professor professor){
-        return professor;
-    }
-
-    public List<Professor> obterTodosProfessores(){
-        List<Professor> professores = null;
-        return professores;
-    }
-
-    public Agenda obterPorId(int id){
-        return new Agenda();
-    }
-
-    public Agenda salvar(Agenda agenda){
-        return agenda;
-    }
-
-    public Agenda editar(Agenda agenda){
-        return agenda;
-    }
-
-    public Agenda setTreinamento(int idAgenda, String treinamento){
-        return new Agenda();
-    }
-
-    @OneToOne(mappedBy = "agenda2")
-    private Professor professor;
-
-    @OneToOne(mappedBy = "agenda")
-    private Curso curso;
-
-    public Agenda(Agenda param){
-        this.inicio = param.getInicio();
-        this.fim = param.getFim();
-        this.cidade = param.getCidade();
-        this.estado = param.getEstado();
-        this.cep = param.getCep();
-        this.treinamento = param.getTreinamento();
-        this.professor = param.getProfessor();
-        this.curso = param.getCurso();
-    }
+    @ManyToOne
+    @JoinColumn(name = "curso_id")
+    private Curso cursos;
+    
+    @ManyToOne
+    @JoinColumn(name = "professor_id")
+    private Professor professores;
 }

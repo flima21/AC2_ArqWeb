@@ -23,29 +23,29 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RestController
 @RequestMapping("agenda")
 public class AgendaController {
-  @Autowired
-  private AgendaRepository agendaRepository;
+  // @Autowired
+  // private AgendaRepository agendaRepository;
 
-  @GetMapping("")
-  public ResponseEntity<List<Agenda>> listAllAgenda(@RequestParam String param) {
-    List<Agenda> agendaList = agendaRepository.findAll();
-    return ResponseEntity.ok(agendaList);
-  }
+  // @GetMapping("")
+  // public ResponseEntity<List<Agenda>> listAllAgenda(@RequestParam String param) {
+  //   List<Agenda> agendaList = agendaRepository.findAll();
+  //   return ResponseEntity.ok(agendaList);
+  // }
   
 
-  @GetMapping("/{id}")
-  public ResponseEntity<Agenda> agendaById(@PathVariable(name="id") Integer param) {
-    Agenda agenda = agendaRepository.getReferenceById(param);
-    return ResponseEntity.ok(agenda);
-  }
+  // @GetMapping("/{id}")
+  // public ResponseEntity<Agenda> agendaById(@PathVariable(name="id") Integer param) {
+  //   Agenda agenda = agendaRepository.getReferenceById(param);
+  //   return ResponseEntity.ok(agenda);
+  // }
   
-  @PostMapping("")
-  @Transactional
-  public ResponseEntity<Agenda> registerAgenda(@RequestBody Agenda param) {
-    Agenda agenda = new Agenda(param);
-    agendaRepository.save(agenda);
-    return ResponseEntity.ok(agenda);
-  }
+  // @PostMapping("")
+  // @Transactional
+  // public ResponseEntity<Agenda> registerAgenda(@RequestBody Agenda param) {
+  //   Agenda agenda = new Agenda(param);
+  //   agendaRepository.save(agenda);
+  //   return ResponseEntity.ok(agenda);
+  // }
   
 
 }
