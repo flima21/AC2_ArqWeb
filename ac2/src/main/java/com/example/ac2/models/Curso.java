@@ -31,7 +31,7 @@ public class Curso {
     private String descricao;
 
     @Column(nullable = false)
-    private String cargaHoraria;
+    private double cargaHoraria;
 
     @Column(nullable = false)
     private String objetivo;
