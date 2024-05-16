@@ -20,6 +20,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class Agenda {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
