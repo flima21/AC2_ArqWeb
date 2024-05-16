@@ -28,7 +28,7 @@ public class AgendaImpl implements AgendaService {
     if (this.agendaRepository.findAgendaFetchDataInicioProfessores(agendaDTO.getDataInicio(), agendaDTO.getProfessores_id()) != null) throw new ApiErrorApplication("Professor com agenda indisponível");
     
     Professor professor = this.professorRepository.findById(agendaDTO.getCurso_id()).orElseThrow(() -> new ApiErrorApplication("Professor não localizado"));
-    Curso curso = this.cursoRepository.findCursosByIdFetchProfessores(agendaDTO.getProfessores_id()).orElseThrow(() -> new ApiErrorApplication("Professor não apto para curso"));
+    Curso curso = this.cursoRepository.findCursoByIdFetchProfessores(agendaDTO.getProfessores_id()).orElseThrow(() -> new ApiErrorApplication("Professor não apto para curso"));
     
     Agenda agenda = new Agenda();
 

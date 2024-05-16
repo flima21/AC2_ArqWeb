@@ -11,7 +11,7 @@ import com.example.ac2.models.Professor;
 
 @Repository
 public interface ProfessorRepository extends JpaRepository<Professor, Integer> {
-    @Query("SELECT p FROM Professores p RIGHT JOIN FETCH p.agenda WHERE p.id = :id")
+    @Query("SELECT p FROM Professor p RIGHT JOIN FETCH p.agenda WHERE p.id = :id")
     List<Professor> findProfessoresFetchAgenda(@Param("id") Integer id);
 
 }

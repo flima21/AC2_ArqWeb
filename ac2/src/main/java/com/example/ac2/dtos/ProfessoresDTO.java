@@ -1,5 +1,7 @@
 package com.example.ac2.dtos;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,5 +19,6 @@ public class ProfessoresDTO {
     private String endereco;
     private String celular;
 
-    private CursosDTO cursos;
+    private List<CursosDTO> cursos;
+    private List<AgendaDTO> agenda;
 }
