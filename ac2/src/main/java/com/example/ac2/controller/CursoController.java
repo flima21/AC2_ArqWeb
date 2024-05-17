@@ -30,27 +30,27 @@ public class CursoController {
 
   @GetMapping()
   @ResponseStatus(HttpStatus.OK)
-  public List<CursosDTO> listAllCursos() {
+  public List<DadosCursosDTO> listAllCursos() {
     return this.cursoImpl.findAll();
   }
 
   @GetMapping("/curso-professor/id")
   @ResponseStatus(HttpStatus.OK)
-  public CursosDTO courseById(@PathVariable Integer id) {
+  public DadosCursosDTO courseById(@PathVariable Integer id) {
     return this.cursoImpl.findById(id);
   }
 
   @PostMapping()
   @ResponseStatus(HttpStatus.CREATED)
-  public Curso registerCourse(@RequestBody DadosCursosDTO curso) {
+  public Curso registerCourse(@RequestBody CursosDTO curso) {
     return this.cursoImpl.store(curso);
   }
 
-  @PutMapping()
-  @ResponseStatus(HttpStatus.OK)
-  public Curso update(@RequestBody DadosCursosDTO curso) {
-    return this.cursoImpl.update(curso);
-  }
+  // @PutMapping()
+  // @ResponseStatus(HttpStatus.OK)
+  // public Curso update(@RequestBody DadosCursosDTO curso) {
+  //   return this.cursoImpl.update(curso);
+  // }
 
   @DeleteMapping("/{id}")
   @ResponseStatus(HttpStatus.OK)
