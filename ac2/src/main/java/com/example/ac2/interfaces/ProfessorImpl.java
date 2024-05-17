@@ -152,6 +152,9 @@ public class ProfessorImpl implements ProfessorService {
   @Transactional
   public void delete(Integer id) {
     Professor professor = this.professorRepository.findById(id).orElseThrow(() -> new ApiErrorApplication("Professor não localizado"));
+    
+    if (this.agendaRepository.existsByProfessoresId(professor.getId())) throw new ApiErrorApplication("O professor está associado com agendas e não pode ser excluido, remaneje as agendas"); 
+
     this.professorRepository.delete(professor);
   }
 

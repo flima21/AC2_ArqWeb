@@ -16,8 +16,8 @@ public interface AgendaRepository extends JpaRepository<Agenda, Integer> {
     @Query("SELECT ag FROM Agenda ag LEFT JOIN FETCH ag.professores WHERE ag.professores.id = :id")
     List<Agenda> findAgendaByIdProfessoresFetchProfessores(@Param("id") Integer professores_id);
 
-    @Query("SELECT ag FROM Agenda ag inner JOIN FETCH ag.professores WHERE ag.inicio = :dataInicio AND ag.professores.id = :id")
-    Agenda findAgendaFetchDataInicioProfessores(@Param("dataInicio") LocalDateTime dataInicio, @Param("id") Integer id);
+    @Query("SELECT ag FROM Agenda ag inner JOIN FETCH ag.professores WHERE (ag.inicio >= :dataInicio AND ag.fim <= :dataFinal) and (ag.professores.id = :id)")
+    Agenda findAgendaFetchDataInicioProfessores(@Param("dataInicio") LocalDateTime dataInicio, @Param("dataFinal") LocalDateTime dataFinal, @Param("id") Integer id);
 
     boolean existsByProfessoresId(Integer id);
     boolean existsByCursosId(Integer id);

@@ -13,7 +13,7 @@ public interface CursoService {
   List<DadosProfessoresDTO> findProfessorEspecializado(Integer idCurso);
 
   Curso store(CursosDTO curso);
-  // Curso update(CursosDTO professor);
+  Curso update(CursosDTO professor);
 
   void delete(Integer id);
 

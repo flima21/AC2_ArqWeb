@@ -11,6 +11,7 @@ import com.example.ac2.dtos.DadosProfessoresDTO;
 import com.example.ac2.exception.ApiErrorApplication;
 import com.example.ac2.models.Curso;
 import com.example.ac2.models.Professor;
+import com.example.ac2.repository.AgendaRepository;
 import com.example.ac2.repository.CursoRepository;
 import com.example.ac2.services.CursoService;
 
@@ -18,10 +19,24 @@ import com.example.ac2.services.CursoService;
 public class CursoImpl implements CursoService {
 
   private CursoRepository cursoRepository;
+  private AgendaRepository agendaRepository;
 
   @Override
   public Curso store(CursosDTO curso) {
     Curso newCurso = new Curso();
+
+    newCurso.setCargaHoraria(curso.getCargaHoraria());
+    newCurso.setDescricao(curso.getDescricao());
+    newCurso.setEmenta(curso.getEmenta());
+    newCurso.setId(curso.getId());
+    newCurso.setObjetivo(curso.getObjetivos());
+
+    return this.cursoRepository.save(newCurso);
+  }
+
+  @Override
+  public Curso update(CursosDTO curso) {
+    Curso newCurso = this.cursoRepository.findById(curso.getId()).orElseThrow(() -> new ApiErrorApplication("Curso não encontrado"));
 
     newCurso.setCargaHoraria(curso.getCargaHoraria());
     newCurso.setDescricao(curso.getDescricao());
@@ -97,6 +112,9 @@ public class CursoImpl implements CursoService {
   @Override
   public void delete(Integer id) {
     Curso curso = this.cursoRepository.findById(id).orElseThrow(() -> new ApiErrorApplication("Curso não encontrado"));
+    
+    if (this.agendaRepository.existsByCursosId(id)) throw new ApiErrorApplication("O curso está associado a uma agenda, remaneje-o");
+
     this.cursoRepository.delete(curso);
   }
 

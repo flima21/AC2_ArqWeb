@@ -3,6 +3,8 @@ package com.example.ac2.models;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.annotation.Generated;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -40,10 +42,12 @@ public class Professor {
     @Column(nullable = false)
     private String celular;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "professores")
     private List<Agenda> agenda = new ArrayList<>();;
 
     // Alterar para many to many
+    @JsonIgnore
     @ManyToMany(mappedBy = "professores")
     private List<Curso> cursos = new ArrayList<>();
 

@@ -3,6 +3,8 @@ package com.example.ac2.models;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -39,9 +41,11 @@ public class Curso {
     @Column(nullable = false)
     private String ementa;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "cursos")
     private List<Agenda> agenda;
     
+    @JsonIgnore
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "cursos_professores", joinColumns = {@JoinColumn(name = "professores_id")},inverseJoinColumns = {@JoinColumn(name = "cursos_id")})
     private List<Professor> professores = new ArrayList<>();
