@@ -3,49 +3,59 @@ package com.example.ac2.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.example.ac2.models.Agenda;
-import com.example.ac2.repository.AgendaRepository;
-
-import jakarta.transaction.Transactional;
-
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.ac2.dtos.AgendaDTO;
+import com.example.ac2.dtos.DadosAgendaDTO;
+import com.example.ac2.models.Agenda;
+import com.example.ac2.services.AgendaService;
+
+import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
+
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-
-
 @RestController
-@RequestMapping("agenda")
+@RequestMapping("/agenda")
+@AllArgsConstructor
 public class AgendaController {
-  // @Autowired
-  // private AgendaRepository agendaRepository;
+  private AgendaService agendaImpl;
 
-  // @GetMapping("")
-  // public ResponseEntity<List<Agenda>> listAllAgenda(@RequestParam String param) {
-  //   List<Agenda> agendaList = agendaRepository.findAll();
-  //   return ResponseEntity.ok(agendaList);
-  // }
-  
+  @GetMapping()
+  @ResponseStatus(HttpStatus.OK)
+  public List<AgendaDTO> listAllAgendas() {
+    return this.agendaImpl.findAll();
+  }
 
-  // @GetMapping("/{id}")
-  // public ResponseEntity<Agenda> agendaById(@PathVariable(name="id") Integer param) {
-  //   Agenda agenda = agendaRepository.getReferenceById(param);
-  //   return ResponseEntity.ok(agenda);
-  // }
-  
-  // @PostMapping("")
-  // @Transactional
-  // public ResponseEntity<Agenda> registerAgenda(@RequestBody Agenda param) {
-  //   Agenda agenda = new Agenda(param);
-  //   agendaRepository.save(agenda);
-  //   return ResponseEntity.ok(agenda);
-  // }
-  
+  @GetMapping("/{id}")
+  @ResponseStatus(HttpStatus.OK)
+  public AgendaDTO agendaById(@PathVariable Integer id) {
+    return this.agendaImpl.findById(id);
+  }
 
+  @PostMapping()
+  @ResponseStatus(HttpStatus.CREATED)
+  public Agenda registerAgenda(@RequestBody DadosAgendaDTO agenda) {
+    return this.agendaImpl.store(agenda);
+  }
+
+  @PutMapping()
+  @ResponseStatus(HttpStatus.OK)
+  public Agenda update(@RequestBody DadosAgendaDTO agenda) {
+    return this.agendaImpl.update(agenda);
+  }
+
+  @DeleteMapping("/{id}")
+  @ResponseStatus(HttpStatus.OK)
+  public void delete(@PathVariable Integer id) {
+    this.agendaImpl.delete(id);
+  }
 }
