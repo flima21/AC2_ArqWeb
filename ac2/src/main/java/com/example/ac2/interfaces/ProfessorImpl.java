@@ -161,4 +161,10 @@ public class ProfessorImpl implements ProfessorService {
     Professor professor2 = this.professorRepository.findById(professor.getId()).orElseThrow(() -> new ApiErrorApplication("Professor não localizado"));
     return this.store(professor);
   }
+
+  @Override
+  @Transactional
+  public List<Agenda> getAgenda(Integer id) {
+    return this.agendaRepository.findAgendaByIdProfessoresFetchProfessores(id);
+  }
 }

@@ -17,5 +17,5 @@ public class DadosCursosDTO {
     private double cargaHoraria;
     private String objetivos;
     private String ementa;
-    private List<ProfessoresDTO> professores;
+    private List<DadosProfessoresDTO> professores;
 }

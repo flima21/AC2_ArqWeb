@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.ac2.dtos.AgendaDTO;
 import com.example.ac2.dtos.DadosProfessoresDTO;
 import com.example.ac2.dtos.ProfessoresDTO;
 import com.example.ac2.interfaces.ProfessorImpl;
+import com.example.ac2.models.Agenda;
 import com.example.ac2.models.Professor;
 import com.example.ac2.services.ProfessorService;
 
@@ -34,6 +36,12 @@ public class ProfessorController {
   @ResponseStatus(HttpStatus.OK)
   public List<ProfessoresDTO> listAllProfessores() {
     return this.professorImpl.findAll();
+  }
+
+  @GetMapping("/agenda/{id}")
+  @ResponseStatus(HttpStatus.OK)
+  public List<Agenda> getAgenda(@PathVariable Integer id) {
+    return this.professorImpl.getAgenda(id);
   }
 
   @GetMapping("/{id}")
