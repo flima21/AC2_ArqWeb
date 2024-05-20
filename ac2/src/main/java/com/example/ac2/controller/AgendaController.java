@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RequestMapping("/agenda")
 @AllArgsConstructor
 public class AgendaController {
-  // private AgendaService agendaImpl;
+  private AgendaService agendaImpl;
 
   // @GetMapping()
   // @ResponseStatus(HttpStatus.OK)
@@ -41,11 +41,11 @@ public class AgendaController {
   //   return this.agendaImpl.findById(id);
   // }
 
-  // @PostMapping()
-  // @ResponseStatus(HttpStatus.CREATED)
-  // public Agenda registerAgenda(@RequestBody DadosAgendaDTO agenda) {
-  //   return this.agendaImpl.store(agenda);
-  // }
+  @PostMapping()
+  @ResponseStatus(HttpStatus.CREATED)
+  public Agenda registerAgenda(@RequestBody AgendaDTO agenda) {
+    return this.agendaImpl.store(agenda);
+  }
 
   // @PutMapping()
   // @ResponseStatus(HttpStatus.OK)
@@ -53,9 +53,9 @@ public class AgendaController {
   //   return this.agendaImpl.update(agenda);
   // }
 
-  // @DeletnseStatus(HttpStatus.OK)
-  // public void delete(@PathVariable Integer id) {
-  //   thiseMapping("/{id}")
-  // @Respo.agendaImpl.delete(id);
-  // }
+  @DeleteMapping("{id}")
+  @ResponseStatus(HttpStatus.GONE)
+  public void delete(@PathVariable Integer id) {
+    this.agendaImpl.delete(id);
+  }
 }

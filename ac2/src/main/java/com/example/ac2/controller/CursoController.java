@@ -34,7 +34,7 @@ public class CursoController {
     return this.cursoImpl.findAll();
   }
 
-  @GetMapping("/curso-professor/id")
+  @GetMapping("/curso-professor/{id}")
   @ResponseStatus(HttpStatus.OK)
   public DadosCursosDTO courseById(@PathVariable Integer id) {
     return this.cursoImpl.findById(id);
