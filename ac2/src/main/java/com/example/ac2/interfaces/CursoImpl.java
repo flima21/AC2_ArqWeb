@@ -15,13 +15,18 @@ import com.example.ac2.repository.AgendaRepository;
 import com.example.ac2.repository.CursoRepository;
 import com.example.ac2.services.CursoService;
 
+import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
+
 @Service
+@AllArgsConstructor
 public class CursoImpl implements CursoService {
 
   private CursoRepository cursoRepository;
   private AgendaRepository agendaRepository;
 
   @Override
+  @Transactional
   public Curso store(CursosDTO curso) {
     Curso newCurso = new Curso();
 
@@ -35,6 +40,7 @@ public class CursoImpl implements CursoService {
   }
 
   @Override
+  @Transactional
   public Curso update(CursosDTO curso) {
     Curso newCurso = this.cursoRepository.findById(curso.getId()).orElseThrow(() -> new ApiErrorApplication("Curso não encontrado"));
 
@@ -48,6 +54,7 @@ public class CursoImpl implements CursoService {
   }
 
   @Override
+  @Transactional
   public List<DadosCursosDTO> findAll() {
     List<Curso> cursos = this.cursoRepository.findAll();
     List<DadosCursosDTO> cursosDTOs = new ArrayList<DadosCursosDTO>();
@@ -80,7 +87,8 @@ public class CursoImpl implements CursoService {
 
     return cursosDTOs;
   }  
-
+  @Override  
+  @Transactional
   public DadosCursosDTO findById(Integer id){
     Curso curso = this.cursoRepository.findById(id).orElseThrow(() -> new ApiErrorApplication("Curso não encontrado"));
     DadosCursosDTO cursosDTO = new DadosCursosDTO();
@@ -110,6 +118,7 @@ public class CursoImpl implements CursoService {
   }
 
   @Override
+  @Transactional
   public void delete(Integer id) {
     Curso curso = this.cursoRepository.findById(id).orElseThrow(() -> new ApiErrorApplication("Curso não encontrado"));
     
@@ -119,6 +128,7 @@ public class CursoImpl implements CursoService {
   }
 
   @Override
+  @Transactional
   public List<DadosProfessoresDTO> findProfessorEspecializado(Integer id) {
     List<DadosProfessoresDTO> professoresDTOs = this.cursoRepository.findCursoByIdFetchProfessores(id);
     return professoresDTOs;

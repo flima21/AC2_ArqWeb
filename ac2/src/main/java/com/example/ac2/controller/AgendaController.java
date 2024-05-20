@@ -29,29 +29,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class AgendaController {
   private AgendaService agendaImpl;
 
-  // @GetMapping()
-  // @ResponseStatus(HttpStatus.OK)
-  // public List<AgendaDTO> listAllAgendas() {
-  //   return this.agendaImpl.findAll();
-  // }
-
-  // @GetMapping("/{id}")
-  // @ResponseStatus(HttpStatus.OK)
-  // public AgendaDTO agendaById(@PathVariable Integer id) {
-  //   return this.agendaImpl.findById(id);
-  // }
-
   @PostMapping()
   @ResponseStatus(HttpStatus.CREATED)
   public Agenda registerAgenda(@RequestBody AgendaDTO agenda) {
     return this.agendaImpl.store(agenda);
   }
-
-  // @PutMapping()
-  // @ResponseStatus(HttpStatus.OK)
-  // public Agenda update(@RequestBody DadosAgendaDTO agenda) {
-  //   return this.agendaImpl.update(agenda);
-  // }
 
   @DeleteMapping("{id}")
   @ResponseStatus(HttpStatus.GONE)

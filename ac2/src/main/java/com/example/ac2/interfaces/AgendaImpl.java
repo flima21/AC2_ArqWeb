@@ -14,15 +14,20 @@ import com.example.ac2.repository.CursoRepository;
 import com.example.ac2.repository.ProfessorRepository;
 import com.example.ac2.services.AgendaService;
 
+import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
+
 @Service
+@AllArgsConstructor
 public class AgendaImpl implements AgendaService {
   private AgendaRepository agendaRepository;
   private CursoRepository cursoRepository;
   private ProfessorRepository professorRepository;
 
   @Override
+  @Transactional
   public Agenda store(AgendaDTO agendaDTO) {
-    Professor professor = this.professorRepository.findById(agendaDTO.getCurso_id()).orElseThrow(() -> new ApiErrorApplication("Professor não localizado"));
+    Professor professor = this.professorRepository.findById(agendaDTO.getProfessores_id()).orElseThrow(() -> new ApiErrorApplication("Professor não localizado"));
     Curso curso = this.cursoRepository.findById(agendaDTO.getCurso_id()).orElseThrow(() -> new ApiErrorApplication("Curso não localizado"));
 
     if (this.agendaRepository.findAgendaFetchDataInicioProfessores(agendaDTO.getDataInicio(), agendaDTO.getDataFinal(),agendaDTO.getProfessores_id()) != null) throw new ApiErrorApplication("Professor com agenda indisponível");
@@ -44,21 +49,26 @@ public class AgendaImpl implements AgendaService {
   } 
 
   @Override
+  @Transactional
   public List<Agenda> findAgendaByProfessor(int professorId){
     return this.agendaRepository.findAgendaByIdProfessoresFetchProfessores(professorId);
   }
-
+  
+  @Override
+  @Transactional
   public void delete(int agendaId) {
     Agenda agenda = this.agendaRepository.findById(agendaId).orElseThrow(() -> new ApiErrorApplication("Agenda não encontrada"));
     this.agendaRepository.delete(agenda);
   }
 
   @Override
+  @Transactional
   public boolean existsByProfessoresId(Integer professor_id) {
     return this.agendaRepository.existsByProfessoresId(professor_id);
   }
 
   @Override
+  @Transactional
   public boolean existsByCursosId(Integer cursos_id) {
     return this.agendaRepository.existsByCursosId(cursos_id);
   }
