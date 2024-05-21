@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.example.ac2.dtos.AgendaDTO;
+import com.example.ac2.dtos.TreinamentoDTO;
 import com.example.ac2.exception.ApiErrorApplication;
 import com.example.ac2.models.Agenda;
 import com.example.ac2.models.Curso;
@@ -26,6 +27,20 @@ public class AgendaImpl implements AgendaService {
 
   @Override
   @Transactional
+  public List<Agenda> findAll() {
+    return this.agendaRepository.findAll();
+  }
+
+  @Override
+  @Transactional
+  public Agenda findById(Integer id) {
+    Agenda agenda = this.agendaRepository.findById(id).orElseThrow(() -> new ApiErrorApplication("Agenda não localizada"));
+    return agenda;
+  }
+
+
+  @Override
+  @Transactional
   public Agenda store(AgendaDTO agendaDTO) {
     Professor professor = this.professorRepository.findById(agendaDTO.getProfessores_id()).orElseThrow(() -> new ApiErrorApplication("Professor não localizado"));
     Curso curso = this.cursoRepository.findById(agendaDTO.getCurso_id()).orElseThrow(() -> new ApiErrorApplication("Curso não localizado"));
@@ -37,7 +52,7 @@ public class AgendaImpl implements AgendaService {
 
     agenda.setCep(agendaDTO.getCep());
     agenda.setCidade(agendaDTO.getCidade());
-    agenda.setEstado(agenda.getEstado());
+    agenda.setEstado(agendaDTO.getEstado());
     agenda.setFim(agendaDTO.getDataFinal());
     agenda.setInicio(agendaDTO.getDataInicio());
     agenda.setCursos(curso);
@@ -45,7 +60,7 @@ public class AgendaImpl implements AgendaService {
     agenda.setId(agendaDTO.getId());
     agenda.setTreinamento(agendaDTO.getTreinamento());
 
-    return agenda;
+    return this.agendaRepository.save(agenda);
   } 
 
   @Override
@@ -71,5 +86,15 @@ public class AgendaImpl implements AgendaService {
   @Transactional
   public boolean existsByCursosId(Integer cursos_id) {
     return this.agendaRepository.existsByCursosId(cursos_id);
+  }
+
+  @Override
+  @Transactional
+  public Agenda setTreinamento(TreinamentoDTO treinamento) {
+    Agenda agenda = this.agendaRepository.findById(treinamento.getId()).orElseThrow(() -> new ApiErrorApplication("Agenda não encontrada"));
+
+    agenda.setTreinamento(treinamento.getTreinamento());
+
+    return this.agendaRepository.save(agenda);
   }
 }

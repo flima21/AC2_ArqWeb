@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.ac2.dtos.CursosDTO;
 import com.example.ac2.dtos.DadosCursosDTO;
+import com.example.ac2.dtos.DadosProfessoresDTO;
 import com.example.ac2.models.Curso;
+import com.example.ac2.models.Professor;
 import com.example.ac2.services.CursoService;
 
 import lombok.AllArgsConstructor;
@@ -34,27 +36,36 @@ public class CursoController {
     return this.cursoImpl.findAll();
   }
 
+  @GetMapping("/{id}")
+  @ResponseStatus(HttpStatus.OK)
+  public DadosCursosDTO listaPorId(@PathVariable("id") Integer id) {
+    return this.cursoImpl.findById(id);
+  }
+
   @GetMapping("/curso-professor/{id}")
   @ResponseStatus(HttpStatus.OK)
-  public DadosCursosDTO courseById(@PathVariable Integer id) {
-    return this.cursoImpl.findById(id);
+  public List<Professor> getEspecializacao(@PathVariable Integer id) {
+    return this.cursoImpl.findProfessorEspecializado(id);
   }
 
   @PostMapping()
   @ResponseStatus(HttpStatus.CREATED)
-  public Curso registerCourse(@RequestBody CursosDTO curso) {
+  public Curso registerCourse(@RequestBody DadosCursosDTO curso) {
     return this.cursoImpl.store(curso);
   }
 
-  // @PutMapping()
-  // @ResponseStatus(HttpStatus.OK)
-  // public Curso update(@RequestBody DadosCursosDTO curso) {
-  //   return this.cursoImpl.update(curso);
-  // }
+  @PutMapping()
+  @ResponseStatus(HttpStatus.OK)
+  public Curso update(@RequestBody DadosCursosDTO curso) {
+    return this.cursoImpl.update(curso);
+  }
 
   @DeleteMapping("/{id}")
   @ResponseStatus(HttpStatus.OK)
   public void delete(@PathVariable Integer id) {
     this.cursoImpl.delete(id);
   }
+
+
+
 }

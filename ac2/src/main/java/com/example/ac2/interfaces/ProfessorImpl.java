@@ -26,6 +26,7 @@ import lombok.AllArgsConstructor;
 public class ProfessorImpl implements ProfessorService {
   private ProfessorRepository professorRepository;
   private AgendaRepository agendaRepository;
+  private CursoRepository cursoRepository;
 
   @Override
   @Transactional
@@ -155,6 +156,12 @@ public class ProfessorImpl implements ProfessorService {
     
     if (this.agendaRepository.existsByProfessoresId(professor.getId())) throw new ApiErrorApplication("O professor está associado com agendas e não pode ser excluido, remaneje as agendas"); 
 
+    // List<Curso> cursos = this.cursoRepository.findAll();
+    
+    // for (Curso curso : cursos) {
+    //   professor.getCursos().remove(curso);
+    // }
+
     this.professorRepository.delete(professor);
   }
 
@@ -168,6 +175,10 @@ public class ProfessorImpl implements ProfessorService {
   @Override
   @Transactional
   public List<Agenda> getAgenda(Integer id) {
-    return this.agendaRepository.findAgendaByIdProfessoresFetchProfessores(id);
+    List<Agenda> agendas = this.agendaRepository.findAgendaByIdProfessoresFetchProfessores(id);
+
+    if (agendas == null) throw new ApiErrorApplication("Sem agendas para seu cadastro");
+
+    return agendas;
   }
 }

@@ -35,7 +35,7 @@ public class Agenda {
     @Column(nullable = false,length = 80)
     private String cidade;
 
-    @Column(nullable = false,length = 80)
+    @Column(length = 80)
     private String estado;
 
     @Column(nullable = false,length = 80)

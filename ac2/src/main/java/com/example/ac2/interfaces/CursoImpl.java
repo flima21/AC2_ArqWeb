@@ -13,6 +13,7 @@ import com.example.ac2.models.Curso;
 import com.example.ac2.models.Professor;
 import com.example.ac2.repository.AgendaRepository;
 import com.example.ac2.repository.CursoRepository;
+import com.example.ac2.repository.ProfessorRepository;
 import com.example.ac2.services.CursoService;
 
 import jakarta.transaction.Transactional;
@@ -24,31 +25,48 @@ public class CursoImpl implements CursoService {
 
   private CursoRepository cursoRepository;
   private AgendaRepository agendaRepository;
+  private ProfessorRepository professorRepository;
 
   @Override
   @Transactional
-  public Curso store(CursosDTO curso) {
+  public Curso store(DadosCursosDTO curso) {
     Curso newCurso = new Curso();
+    List<DadosProfessoresDTO> professoresDTOs = curso.getProfessores();
+    List<Professor> professoresLista = new ArrayList<>();
 
+    for (DadosProfessoresDTO dadosProfessoresDTO : professoresDTOs) {
+      Professor professor = this.professorRepository.findById(dadosProfessoresDTO.getId()).orElseThrow(() -> new ApiErrorApplication("Professor " + dadosProfessoresDTO.getNome() + " não encontrado"));
+      professoresLista.add(professor);
+    }
+    
     newCurso.setCargaHoraria(curso.getCargaHoraria());
     newCurso.setDescricao(curso.getDescricao());
     newCurso.setEmenta(curso.getEmenta());
     newCurso.setId(curso.getId());
     newCurso.setObjetivo(curso.getObjetivos());
+    newCurso.setProfessores(professoresLista);
 
     return this.cursoRepository.save(newCurso);
   }
 
   @Override
   @Transactional
-  public Curso update(CursosDTO curso) {
+  public Curso update(DadosCursosDTO curso) {
     Curso newCurso = this.cursoRepository.findById(curso.getId()).orElseThrow(() -> new ApiErrorApplication("Curso não encontrado"));
+    List<DadosProfessoresDTO> professoresDTOs = curso.getProfessores();
+    List<Professor> professoresLista = new ArrayList<>();
 
+    for (DadosProfessoresDTO dadosProfessoresDTO : professoresDTOs) {
+      Professor professor = this.professorRepository.findById(dadosProfessoresDTO.getId()).orElseThrow(() -> new ApiErrorApplication("Professor " + dadosProfessoresDTO.getNome() + " não encontrado"));
+      professoresLista.add(professor);
+    }
+    
     newCurso.setCargaHoraria(curso.getCargaHoraria());
     newCurso.setDescricao(curso.getDescricao());
     newCurso.setEmenta(curso.getEmenta());
     newCurso.setId(curso.getId());
     newCurso.setObjetivo(curso.getObjetivos());
+    newCurso.setProfessores(professoresLista);
 
     return this.cursoRepository.save(newCurso);
   }
@@ -121,16 +139,21 @@ public class CursoImpl implements CursoService {
   @Transactional
   public void delete(Integer id) {
     Curso curso = this.cursoRepository.findById(id).orElseThrow(() -> new ApiErrorApplication("Curso não encontrado"));
-    
     if (this.agendaRepository.existsByCursosId(id)) throw new ApiErrorApplication("O curso está associado a uma agenda, remaneje-o");
+
+    List<Professor> professores = curso.getProfessores();
+
+    for (Professor professor : professores) {
+      curso.getProfessores().remove(professor);  
+    }
 
     this.cursoRepository.delete(curso);
   }
 
   @Override
   @Transactional
-  public List<DadosProfessoresDTO> findProfessorEspecializado(Integer id) {
-    List<DadosProfessoresDTO> professoresDTOs = this.cursoRepository.findCursoByIdFetchProfessores(id);
+  public List<Professor> findProfessorEspecializado(Integer id) {
+    List<Professor> professoresDTOs = this.cursoRepository.findCursoByIdFetchProfessores(id);
     return professoresDTOs;
   }
 }

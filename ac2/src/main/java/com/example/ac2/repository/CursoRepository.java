@@ -10,10 +10,11 @@ import org.springframework.stereotype.Repository;
 
 import com.example.ac2.dtos.DadosProfessoresDTO;
 import com.example.ac2.models.Curso;
+import com.example.ac2.models.Professor;
 
 @Repository
 public interface CursoRepository extends JpaRepository<Curso, Integer> {
-    @Query("select cc from Curso cc left join fetch cc.professores where cc.id = :id")
-    List<DadosProfessoresDTO> findCursoByIdFetchProfessores(@Param("id") Integer id);
+    @Query("select p from Curso cc left join cc.professores p where cc.id = :id")
+    List<Professor> findCursoByIdFetchProfessores(@Param("id") Integer id);
 
 }
