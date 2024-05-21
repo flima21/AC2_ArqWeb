@@ -156,11 +156,12 @@ public class ProfessorImpl implements ProfessorService {
     
     if (this.agendaRepository.existsByProfessoresId(professor.getId())) throw new ApiErrorApplication("O professor está associado com agendas e não pode ser excluido, remaneje as agendas"); 
 
-    // List<Curso> cursos = this.cursoRepository.findAll();
-    
-    // for (Curso curso : cursos) {
-    //   professor.getCursos().remove(curso);
-    // }
+        // Desassociar o professor dos cursos
+    for (Curso curso : professor.getCursos()) {
+      curso.getProfessores().remove(professor);
+    }
+
+    professor.getCursos().clear();
 
     this.professorRepository.delete(professor);
   }
